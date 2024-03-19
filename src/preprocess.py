@@ -1,6 +1,7 @@
 import pydub
 import subprocess
 
+
 import os
 
 def convert_all_files_to_wav(directory: str):
@@ -9,17 +10,21 @@ def convert_all_files_to_wav(directory: str):
             print(f"filename: {filename}\n {os.path.join(directory, filename)}\n")
             convert_to_wav(os.path.join(directory, filename))
 
-
-def convert_to_wav(file_path: str):
-    relative_path = os.path.relpath(file_path, 'res')
+def generate_output_filename(file_path: str, dir_path:str):
+    relative_path = os.path.relpath(file_path, dir_path)
     output_file_path = relative_path.replace(" ", "-").replace(".m4a", ".wav")
 
-    print(relative_path)
-    print(output_file_path)
+    return output_file_path
+
+def convert_to_wav(file_path: str):
+    output_file_path = generate_output_filename(file_path, "res")
+    output_file_path = f"res/converted/{output_file_path}"
+
     subprocess.call(['ffmpeg', '-i', 
                      f'{file_path}',
-                     f'res/converted/{output_file_path}'])
+                     f'{output_file_path}'])
     print("finished conversion")
+    return output_file_path
     
 
-convert_all_files_to_wav("res")
+#convert_all_files_to_wav("res")

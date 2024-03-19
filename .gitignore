@@ -3,3 +3,5 @@ res/output/*.txt
 res/converted/*.mp3
 *.DS_Store
 res
+__pycache__
+logs/log*
