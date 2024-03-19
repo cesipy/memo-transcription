@@ -1,3 +1,5 @@
-res/tb*
-res/output/out*
+res/*.m4a
+res/output/*.txt
+res/converted/*.mp3
 *.DS_Store
+res

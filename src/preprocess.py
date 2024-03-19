@@ -6,15 +6,19 @@ import os
 def convert_all_files_to_wav(directory: str):
     for filename in os.listdir(directory):
         if filename.endswith(".m4a"):  # or any other format you want to convert from
+            print(f"filename: {filename}\n {os.path.join(directory, filename)}\n")
             convert_to_wav(os.path.join(directory, filename))
 
 
 def convert_to_wav(file_path: str):
-    file_path_without_extensions = file_path.replace(" ", "-").replace("\ ", "-").replace(".m4a", ".wav")
-    print(file_path_without_extensions)
+    relative_path = os.path.relpath(file_path, 'res')
+    output_file_path = relative_path.replace(" ", "-").replace(".m4a", ".wav")
+
+    print(relative_path)
+    print(output_file_path)
     subprocess.call(['ffmpeg', '-i', 
-                     f'res/{file_path}',
-                     f'res/output/{file_path_without_extensions}'])
+                     f'{file_path}',
+                     f'res/converted/{output_file_path}'])
     print("finished conversion")
     
 
