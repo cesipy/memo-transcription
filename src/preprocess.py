@@ -1,8 +1,10 @@
 import pydub
 import subprocess
+import logger as l
 
 
 import os
+logger = l.Logger()
 
 def convert_all_files_to_wav(directory: str):
     for filename in os.listdir(directory):
@@ -23,8 +25,6 @@ def convert_to_wav(file_path: str):
     subprocess.call(['ffmpeg', '-i', 
                      f'{file_path}',
                      f'{output_file_path}'])
-    print("finished conversion")
+    #logger.log("finished conversion")
     return output_file_path
     
-
-#convert_all_files_to_wav("res")

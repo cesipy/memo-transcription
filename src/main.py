@@ -3,6 +3,7 @@ import logger as l
 import os
 import preprocess
 import time
+import random 
 
 
 # globale variable fürs model
@@ -24,18 +25,37 @@ def write_to_file(text_body: str, filename: str):
         file.write(text_body)
 
 
+def format_text(text: str):
+    min_words_in_row = 14
+    max_words_in_row = 16
+    counter = 0
+    current_line_limit = random.randint(min_words_in_row, max_words_in_row)
+    words = text.split()
+    formatted_text = ""
+    for word in words:
+        counter += 1
+        formatted_text += word + " "
+        if counter >= current_line_limit:
+            formatted_text = formatted_text.rstrip() + "\n"
+            counter = 0
+            current_line_limit = random.randint(min_words_in_row, max_words_in_row)
+    return formatted_text.rstrip()
+
+
 def process_audio_file(audio_path: str):
     try:
         result = transcribe_audio(audio_path)
         result_string = result["text"]
-        #logr.log(result)
+
+        formatted_text = format_text(result_string)
+
         output_filename = preprocess.generate_output_filename(audio_path, "res/converted")
         output_filename = output_filename.replace(".mp3", "")
         full_path_filename = f"res/output/{output_filename}"
 
         logger.log(f"output filename before writing: {full_path_filename}")
 
-        write_to_file(result_string, full_path_filename)
+        write_to_file(formatted_text, full_path_filename)
     except Exception as e:
         logger.log(f"Error processing audio file {audio_path}: {str(e)}")
 
@@ -57,11 +77,15 @@ def process_all_files_in_dir(dir_name: str):
 
 
 def main():
+    start_main = time.time()
     global logger
     logger = l.Logger()
+    logger.log("\nnew processing job.")
     audio_path = "res/tb-19.03.mp3"
     #process_audio_file(audio_path)
     process_all_files_in_dir("res")
+    end_main = time.time()
+    logger.log(f"----------------\nfinished process in {end_main-start_main}\n")
     
 
 if __name__ == "__main__":
