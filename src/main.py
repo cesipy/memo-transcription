@@ -60,7 +60,14 @@ def process_audio_file(audio_path: str):
         logger.log(f"Error processing audio file {audio_path}: {str(e)}")
 
 
+# proce
 def process_all_files_in_dir(dir_name: str):
+    """
+    processes all files with a given extension in a given directory. 
+    the directory is specified in `dir_name`. the file extension is specified using `file_extension`.
+    note: `file_extension` should be in a valid extension, aswell leace out the ".". 
+    example: "mp3" for .mp3 files.
+    """
     for filename in os.listdir(dir_name):
         if filename.endswith("m4a"):
     
@@ -81,8 +88,7 @@ def main():
     global logger
     logger = l.Logger()
     logger.log("\nnew processing job.")
-    audio_path = "res/tb-19.03.mp3"
-    #process_audio_file(audio_path)
+
     process_all_files_in_dir("res")
     end_main = time.time()
     logger.log(f"----------------\nfinished process in {end_main-start_main}\n")
