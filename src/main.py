@@ -15,7 +15,7 @@ def transcribe_audio(path_to_audio: str):
     # base funktioniert soweit gut, für evt. bessere performance die anderen 
     global model
     if model == None:
-        model = whisper.load_model("medium")  
+        model = whisper.load_model("large")  
     result = model.transcribe(path_to_audio)
 
     return result
@@ -81,6 +81,7 @@ def process_all_files_in_dir(dir_name: str):
             end = time.time()
             logger.log(f"transcription succeeded in {end-start}")
             
+
 
 
 def main():
