@@ -2,6 +2,10 @@ res/*.m4a
 res/output/*.txt
 res/converted/*.mp3
 *.DS_Store
-res
+res/*.wav
+res/*.txt
+res/*.mp3
+res/converted/*.wav
+res/output/finished-texts
 __pycache__
 logs/log*
