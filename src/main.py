@@ -90,7 +90,9 @@ def main():
     logger = l.Logger()
     logger.log("\nnew processing job.")
 
-    process_all_files_in_dir("res")
+    path = "res/future-lab.wav"
+
+    process_audio_file(path)
     end_main = time.time()
     logger.log(f"----------------\nfinished process in {end_main-start_main}\n")
     
