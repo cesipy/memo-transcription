@@ -9,3 +9,4 @@ res/converted/*.wav
 res/output/finished-texts
 __pycache__
 logs/log*
+venv
