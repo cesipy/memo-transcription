@@ -1,14 +1,26 @@
 import whisper
-import logger as l
+from logger import Logger
 import os
 import preprocess
 import time
 import random 
+import argparse
 
 
 # globale variable fürs model
 model = None
-logger = None
+logger = Logger()
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Process some audio files.')
+    parser.add_argument('--path', type=str, default="res",
+                        help='The path to the directory containing the audio files to process.')
+    parser.add_argument('--model', type=str, default="large",
+                        help='The model to use for transcription. Options are "base", "medium", "large". Default is "large".')
+    parser.add_argument('--file', type=str,
+                        help='The path to a single audio file to process.')
+    
+    return parser.parse_args()
 
 def transcribe_audio(path_to_audio: str):
     # es gibt verschiedene modesl, 'base', 'medium', 'large'
@@ -60,7 +72,19 @@ def process_audio_file(audio_path: str):
         logger.log(f"Error processing audio file {audio_path}: {str(e)}")
 
 
-# proce
+def process_single_file(file_path: str):
+    if file_path.endswith("m4a"): 
+        
+        output_file_path = preprocess.convert_to_wav(file_path)
+        logger.log(f"preprocessing complete! current path: {output_file_path}")
+
+        start = time.time()
+        process_audio_file(output_file_path)
+        end = time.time()
+        logger.log(f"transcription succeeded in {end-start}")
+
+
+
 def process_all_files_in_dir(dir_name: str):
     """
     processes all files with a given extension in a given directory. 
@@ -85,14 +109,20 @@ def process_all_files_in_dir(dir_name: str):
 
 
 def main():
+    args = parse_arguments()
+
     start_main = time.time()
-    global logger
-    logger = l.Logger()
     logger.log("\nnew processing job.")
 
-    path = "res"
+    global model
+    model = whisper.load_model(args.model)
 
-    process_all_files_in_dir(path)
+    if args.file:
+        process_single_file(args.file)
+    
+    else:
+        process_all_files_in_dir(args.path)
+
     end_main = time.time()
     logger.log(f"----------------\nfinished process in {end_main-start_main}\n")
     
