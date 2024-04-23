@@ -5,3 +5,4 @@ res/converted/*.mp3
 res
 __pycache__
 logs/log*
+venv
