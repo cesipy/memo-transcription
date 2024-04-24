@@ -9,7 +9,7 @@ A step by step series of examples that tell you how to get a development environ
 2. Navigate to the project directory:
 `cd transcription`
 Install the required Python libraries:
-`pip install -r requirements.txt``
+`pip install -r requirements.txt`
 
 
 
