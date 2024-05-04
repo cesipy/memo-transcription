@@ -4,6 +4,7 @@ This project processes audio files and transcribes them into text. It supports p
 
 ## Project Structure
 
+
 - `src/`: Contains the source code for the project.
   - `main.py`: The main script that runs the audio processing.
   - `preprocess.py`: Contains functions for preprocessing audio files.
@@ -24,6 +25,7 @@ This project processes audio files and transcribes them into text. It supports p
     python src/main.py 
 
 ### Arguments
+
 
 - `--path`: The path to the directory containing the audio files to process. Default is "res".
 - `--model`: The model to use for transcription. Options are "base", "medium", "large". Default is "large".
